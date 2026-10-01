@@ -4,25 +4,28 @@ Update this file whenever the current phase, active feature, or implementation s
 
 ## Current Phase
 
-- Feature 02: Editor Chrome — complete
+- Feature 03: Auth — complete
 
 ## Current Goal
 
-- Awaiting Feature 03.
+- Awaiting Feature 04.
 
 ## Completed
 
 - Next.js boilerplate cleanup (stripped globals.css, removed SVGs, minimal page.tsx)
 - Feature 01: Design system — shadcn/ui (Radix, Nova preset) initialized, 7 UI components added (Button, Card, Dialog, Input, Tabs, Textarea, ScrollArea), lucide-react installed, lib/utils.ts cn() helper created, globals.css updated with dark-only theme tokens.
 - Feature 02: Editor chrome — EditorNavbar (fixed top bar, sidebar toggle with PanelLeftOpen/PanelLeftClose) and ProjectSidebar (floating overlay, slides from left, Tabs with My Projects/Shared empty states, New Project button) created in components/editor/. Dialog pattern confirmed ready via existing dialog.tsx.
+- Feature 03: Auth — ClerkProvider with dark theme wraps root layout; proxy.ts (protected-first) at project root; sign-in and sign-up pages at /sign-in/[[...sign-in]] and /sign-up/[[...sign-up]] with two-panel layout (left: logo+tagline+feature list, right: Clerk form; form-only on small screens); app/page.tsx redirects authenticated users to /editor and unauthenticated users to /sign-in; UserButton added to EditorNavbar right section; @clerk/ui installed for dark theme; Clerk env vars added to .env.local.
 
 ## In Progress
 
 - None.
 
+
+
 ## Next Up
 
-- Feature 03 (to be defined)
+- Feature 04 (to be defined)
 
 ## Open Questions
 
