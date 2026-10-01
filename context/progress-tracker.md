@@ -4,16 +4,17 @@ Update this file whenever the current phase, active feature, or implementation s
 
 ## Current Phase
 
-- Feature 01: Design System — complete
+- Feature 02: Editor Chrome — complete
 
 ## Current Goal
 
-- Awaiting Feature 02.
+- Awaiting Feature 03.
 
 ## Completed
 
 - Next.js boilerplate cleanup (stripped globals.css, removed SVGs, minimal page.tsx)
 - Feature 01: Design system — shadcn/ui (Radix, Nova preset) initialized, 7 UI components added (Button, Card, Dialog, Input, Tabs, Textarea, ScrollArea), lucide-react installed, lib/utils.ts cn() helper created, globals.css updated with dark-only theme tokens.
+- Feature 02: Editor chrome — EditorNavbar (fixed top bar, sidebar toggle with PanelLeftOpen/PanelLeftClose) and ProjectSidebar (floating overlay, slides from left, Tabs with My Projects/Shared empty states, New Project button) created in components/editor/. Dialog pattern confirmed ready via existing dialog.tsx.
 
 ## In Progress
 
@@ -21,7 +22,7 @@ Update this file whenever the current phase, active feature, or implementation s
 
 ## Next Up
 
-- Feature 02 (to be defined)
+- Feature 03 (to be defined)
 
 ## Open Questions
 
