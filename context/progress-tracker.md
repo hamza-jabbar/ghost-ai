@@ -4,11 +4,11 @@ Update this file whenever the current phase, active feature, or implementation s
 
 ## Current Phase
 
-- Feature 05 (TBD)
+- Feature 05: Prisma Schema & Data Layer — complete
 
 ## Current Goal
 
-- Awaiting Feature 05.
+- Awaiting Feature 06.
 
 ## Completed
 
@@ -17,6 +17,7 @@ Update this file whenever the current phase, active feature, or implementation s
 - Feature 02: Editor chrome — EditorNavbar (fixed top bar, sidebar toggle with PanelLeftOpen/PanelLeftClose) and ProjectSidebar (floating overlay, slides from left, Tabs with My Projects/Shared empty states, New Project button) created in components/editor/. Dialog pattern confirmed ready via existing dialog.tsx.
 - Feature 03: Auth — ClerkProvider with dark theme wraps root layout; proxy.ts (protected-first) at project root; sign-in and sign-up pages at /sign-in/[[...sign-in]] and /sign-up/[[...sign-up]] with two-panel layout (left: logo+tagline+feature list, right: Clerk form; form-only on small screens); app/page.tsx redirects authenticated users to /editor and unauthenticated users to /sign-in; UserButton added to EditorNavbar right section; @clerk/ui installed for dark theme; Clerk env vars added to .env.local.
 - Feature 04: Project Dialogs & Editor Home — editor home screen with heading/description/New Project button; Create (name + live slug preview), Rename (prefilled, auto-focus, Enter submits), Delete (destructive) dialogs; ProjectSidebar updated with project items and hover rename/delete actions for owned projects; mobile backdrop scrim; useProjectDialogs hook; ProjectDialogsContext for cross-layout state; all wired end-to-end with mock data.
+- Feature 05: Prisma Schema & Data Layer — Project and ProjectCollaborator models in prisma/models/project.prisma; ProjectStatus enum (DRAFT/ARCHIVED); all indexes, relations, cascade delete, and column mappings; lib/prisma.ts singleton with DATABASE_URL branching (prisma+postgres:// → accelerateUrl, others → PrismaPg adapter); migration 20261005221710_init_projects applied; client generated to app/generated/prisma/.
 
 ## In Progress
 
