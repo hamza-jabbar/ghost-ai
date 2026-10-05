@@ -1,15 +1,15 @@
 "use client"
 
 import { createContext, useContext } from "react"
-import { type UseProjectDialogsReturn } from "@/hooks/use-project-dialogs"
+import { type UseProjectActionsReturn } from "@/hooks/use-project-actions"
 
-const ProjectDialogsContext = createContext<UseProjectDialogsReturn | null>(null)
+const ProjectDialogsContext = createContext<UseProjectActionsReturn | null>(null)
 
 export function ProjectDialogsProvider({
   value,
   children,
 }: {
-  value: UseProjectDialogsReturn
+  value: UseProjectActionsReturn
   children: React.ReactNode
 }) {
   return (
@@ -19,7 +19,7 @@ export function ProjectDialogsProvider({
   )
 }
 
-export function useProjectDialogsContext(): UseProjectDialogsReturn {
+export function useProjectDialogsContext(): UseProjectActionsReturn {
   const ctx = useContext(ProjectDialogsContext)
   if (!ctx) throw new Error("useProjectDialogsContext must be used within ProjectDialogsProvider")
   return ctx

@@ -1,6 +1,5 @@
 "use client"
 
-import { useEffect, useState } from "react"
 import {
   Dialog,
   DialogClose,
@@ -13,18 +12,13 @@ import {
 import { Input } from "@/components/ui/input"
 import { Button } from "@/components/ui/button"
 
-function toSlug(name: string): string {
-  return name
-    .toLowerCase()
-    .replace(/\s+/g, "-")
-}
-
 interface CreateProjectDialogProps {
   open: boolean
   onClose: () => void
   name: string
   onNameChange: (v: string) => void
-  onSubmit: (name: string, slug: string) => Promise<void>
+  roomIdPreview: string
+  onSubmit: () => Promise<void>
   isLoading: boolean
 }
 
@@ -33,40 +27,16 @@ export function CreateProjectDialog({
   onClose,
   name,
   onNameChange,
+  roomIdPreview,
   onSubmit,
   isLoading,
 }: CreateProjectDialogProps) {
-  const [slug, setSlug] = useState("")
-  const [slugTouched, setSlugTouched] = useState(false)
-
-  // Reset slug state when dialog opens
-  useEffect(() => {
-    if (open) {
-      setSlug(toSlug(name))
-      setSlugTouched(false)
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [open])
-
-  // Auto-derive slug from name until the user manually edits it
-  useEffect(() => {
-    if (!slugTouched) {
-      setSlug(toSlug(name))
-    }
-  }, [name, slugTouched])
-
-  function handleSlugChange(e: React.ChangeEvent<HTMLInputElement>) {
-    setSlug(e.target.value)
-    setSlugTouched(true)
-  }
-
-  const isSlugValid = slug.length > 0
-  const canSubmit = name.trim().length > 0 && isSlugValid
+  const canSubmit = name.trim().length > 0
 
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault()
     if (!canSubmit) return
-    await onSubmit(name, slug)
+    await onSubmit()
   }
 
   return (
@@ -98,20 +68,15 @@ export function CreateProjectDialog({
               />
             </div>
             <div className="flex flex-col gap-1.5">
-              <label
-                htmlFor="project-slug"
-                className="text-xs font-medium text-copy-secondary"
-              >
-                Slug
+              <label className="text-xs font-medium text-copy-secondary">
+                Room ID preview
               </label>
               <Input
-                id="project-slug"
-                placeholder="my-project"
-                value={slug}
-                onChange={handleSlugChange}
-                disabled={isLoading}
-                className="font-mono text-xs"
-                aria-invalid={slugTouched && !isSlugValid}
+                value={roomIdPreview}
+                readOnly
+                disabled
+                className="font-mono text-xs text-copy-muted"
+                placeholder="my-project-xxxxx"
               />
             </div>
           </div>

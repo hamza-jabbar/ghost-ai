@@ -11,14 +11,16 @@ import {
 } from "@/components/ui/dialog"
 import { Input } from "@/components/ui/input"
 import { Button } from "@/components/ui/button"
-import { type MockProject } from "@/hooks/use-project-dialogs"
+import { type Project } from "@/app/generated/prisma/client"
 
 interface RenameProjectDialogProps {
   open: boolean
   onClose: () => void
-  project: MockProject | null
+  project: Project | null
   name: string
   onNameChange: (v: string) => void
+  onSubmit: () => Promise<void>
+  isLoading: boolean
 }
 
 export function RenameProjectDialog({
@@ -27,15 +29,17 @@ export function RenameProjectDialog({
   project,
   name,
   onNameChange,
+  onSubmit,
+  isLoading,
 }: RenameProjectDialogProps) {
-  function handleSubmit(e: React.FormEvent) {
+  async function handleSubmit(e: React.FormEvent) {
     e.preventDefault()
     if (!name.trim()) return
-    onClose()
+    await onSubmit()
   }
 
   return (
-    <Dialog open={open} onOpenChange={(v) => !v && onClose()}>
+    <Dialog open={open} onOpenChange={(v) => !v && !isLoading && onClose()}>
       <DialogContent className="rounded-3xl sm:max-w-md" showCloseButton={false}>
         <form onSubmit={handleSubmit}>
           <DialogHeader>
@@ -53,17 +57,18 @@ export function RenameProjectDialog({
               value={name}
               onChange={(e) => onNameChange(e.target.value)}
               autoFocus
+              disabled={isLoading}
             />
           </div>
 
           <DialogFooter className="rounded-b-3xl">
             <DialogClose asChild>
-              <Button type="button" variant="outline">
+              <Button type="button" variant="outline" disabled={isLoading}>
                 Cancel
               </Button>
             </DialogClose>
-            <Button type="submit" disabled={!name.trim()}>
-              Rename
+            <Button type="submit" disabled={!name.trim() || isLoading}>
+              {isLoading ? "Renaming…" : "Rename"}
             </Button>
           </DialogFooter>
         </form>

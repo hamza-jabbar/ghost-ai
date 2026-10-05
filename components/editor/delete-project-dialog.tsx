@@ -10,25 +10,25 @@ import {
   DialogTitle,
 } from "@/components/ui/dialog"
 import { Button } from "@/components/ui/button"
-import { type MockProject } from "@/hooks/use-project-dialogs"
+import { type Project } from "@/app/generated/prisma/client"
 
 interface DeleteProjectDialogProps {
   open: boolean
   onClose: () => void
-  project: MockProject | null
+  project: Project | null
+  onConfirm: () => Promise<void>
+  isLoading: boolean
 }
 
 export function DeleteProjectDialog({
   open,
   onClose,
   project,
+  onConfirm,
+  isLoading,
 }: DeleteProjectDialogProps) {
-  function handleConfirm() {
-    onClose()
-  }
-
   return (
-    <Dialog open={open} onOpenChange={(v) => !v && onClose()}>
+    <Dialog open={open} onOpenChange={(v) => !v && !isLoading && onClose()}>
       <DialogContent className="rounded-3xl sm:max-w-md" showCloseButton={false}>
         <DialogHeader>
           <DialogTitle>Delete project</DialogTitle>
@@ -41,12 +41,12 @@ export function DeleteProjectDialog({
 
         <DialogFooter className="rounded-b-3xl">
           <DialogClose asChild>
-            <Button type="button" variant="outline">
+            <Button type="button" variant="outline" disabled={isLoading}>
               Cancel
             </Button>
           </DialogClose>
-          <Button variant="destructive" onClick={handleConfirm}>
-            Delete project
+          <Button variant="destructive" onClick={onConfirm} disabled={isLoading}>
+            {isLoading ? "Deleting…" : "Delete project"}
           </Button>
         </DialogFooter>
       </DialogContent>

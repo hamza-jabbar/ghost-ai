@@ -5,27 +5,33 @@ import { cn } from "cn"
 import { Button } from "@/components/ui/button"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { ScrollArea } from "@/components/ui/scroll-area"
-import { type MockProject } from "@/hooks/use-project-dialogs"
+import { type Project } from "@/app/generated/prisma/client"
 
 interface ProjectSidebarProps {
   isOpen: boolean
   onClose: () => void
-  projects: MockProject[]
+  ownedProjects: Project[]
+  sharedProjects: Project[]
+  activeProjectId?: string
   onOpenCreate: () => void
-  onOpenRename: (project: MockProject) => void
-  onOpenDelete: (project: MockProject) => void
+  onOpenRename: (project: Project) => void
+  onOpenDelete: (project: Project) => void
 }
 
 interface ProjectItemProps {
-  project: MockProject
-  onRename: (project: MockProject) => void
-  onDelete: (project: MockProject) => void
+  project: Project
+  onRename: (project: Project) => void
+  onDelete: (project: Project) => void
   showActions: boolean
+  isActive?: boolean
 }
 
-function ProjectItem({ project, onRename, onDelete, showActions }: ProjectItemProps) {
+function ProjectItem({ project, onRename, onDelete, showActions, isActive }: ProjectItemProps) {
   return (
-    <div className="group flex items-center gap-2 rounded-xl px-2 py-1.5 hover:bg-elevated">
+    <div className={cn(
+      "group flex items-center gap-2 rounded-xl px-2 py-1.5 hover:bg-elevated",
+      isActive && "bg-elevated"
+    )}>
       <span className="flex-1 truncate text-sm text-copy-secondary">
         {project.name}
       </span>
@@ -58,17 +64,15 @@ function ProjectItem({ project, onRename, onDelete, showActions }: ProjectItemPr
 export function ProjectSidebar({
   isOpen,
   onClose,
-  projects,
+  ownedProjects,
+  sharedProjects,
+  activeProjectId,
   onOpenCreate,
   onOpenRename,
   onOpenDelete,
 }: ProjectSidebarProps) {
-  const ownedProjects = projects.filter((p) => p.owned)
-  const sharedProjects = projects.filter((p) => !p.owned)
-
   return (
     <>
-      {/* Mobile backdrop scrim */}
       {isOpen && (
         <div
           className="fixed inset-0 z-20 bg-black/60 md:hidden"
@@ -114,7 +118,8 @@ export function ProjectSidebar({
                     <ProjectItem
                       key={project.id}
                       project={project}
-                      showActions={project.owned}
+                      showActions
+                      isActive={project.id === activeProjectId}
                       onRename={onOpenRename}
                       onDelete={onOpenDelete}
                     />
@@ -137,6 +142,7 @@ export function ProjectSidebar({
                       key={project.id}
                       project={project}
                       showActions={false}
+                      isActive={project.id === activeProjectId}
                       onRename={onOpenRename}
                       onDelete={onOpenDelete}
                     />

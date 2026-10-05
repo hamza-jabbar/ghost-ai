@@ -1,5 +1,12 @@
+import { getProjectsForUser } from "@/lib/projects"
+import { EditorShell } from "@/components/editor/editor-shell"
 import { EditorHome } from "@/components/editor/editor-home"
 
-export default function EditorPage() {
-  return <EditorHome />
+export default async function EditorPage() {
+  const { owned, shared } = await getProjectsForUser()
+  return (
+    <EditorShell ownedProjects={owned} sharedProjects={shared}>
+      <EditorHome />
+    </EditorShell>
+  )
 }
